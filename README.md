@@ -36,6 +36,6 @@ metrics.add('calls')
 metrics.add('age', 25)
 metrics.forEach(({ metric, count }) => console.info(`${metric} => ${count}`))
 // Outputs:
-//requests => 2
+//calls => 2
 //age => 300
 ```
