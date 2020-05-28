@@ -36,6 +36,37 @@ tap.test('meter.add() permits a custom increment', async assert => {
   assert.equal(m.get('foo'), 5)
 })
 
+tap.test('meter.min() retains minimum of existing or new value', async assert => {
+  const m = meter()
+  assert.equal(m.min(), 0)
+  assert.equal(m.min('foo', 10), 10)
+  assert.equal(m.min('foo', 5), 5)
+  assert.equal(m.min('foo', 10), 5)
+  assert.equal(m.min('foo', 3), 3)
+  assert.equal(m.min('foo', 1), 1)
+  assert.equal(m.min('foo', 3), 1)
+  assert.equal(m.min('foo', 0), 0)
+  assert.equal(m.min('foo', 10), 0)
+  assert.equal(m.min('foo', -10), -10)
+  assert.equal(m.min('foo', 10), -10)
+  assert.equal(m.min(), 0)
+})
+
+tap.test('meter.max() retains maximum of existing or new value', async assert => {
+  const m = meter()
+  assert.equal(m.max(), 0)
+  assert.equal(m.max('foo', -10), -10)
+  assert.equal(m.max('foo', -5), -5)
+  assert.equal(m.max('foo', -10), -5)
+  assert.equal(m.max('foo', 0), 0)
+  assert.equal(m.max('foo', -5), 0)
+  assert.equal(m.max('foo', 3), 3)
+  assert.equal(m.max('foo', 0), 3)
+  assert.equal(m.max('foo', 10), 10)
+  assert.equal(m.max('foo', 0), 10)
+  assert.equal(m.max(), 0)
+})
+
 tap.test('meter.set() permits a custom count; ignoring invalid inputs', async assert => {
   const m = meter()
   assert.equal(m.add('foo', 5), 5)

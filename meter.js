@@ -54,6 +54,30 @@ function meter (src, log = false) {
     }
   }
 
+  // Set the metric count to the minimum of the existing or supplied count
+  function min (metric, count) {
+    if ((typeof metric === 'string') && (typeof count === 'number')) {
+      const oldCount = map.get(metric)
+      const newCount = (oldCount == null) ? count : (oldCount > count) ? count : oldCount
+      map.set(metric, newCount)
+      return newCount
+    } else {
+      return 0
+    }
+  }
+
+  // Set the metric count to the maximum of the existing or supplied count
+  function max (metric, count) {
+    if ((typeof metric === 'string') && (typeof count === 'number')) {
+      const oldCount = map.get(metric)
+      const newCount = (oldCount == null) ? count : (oldCount < count) ? count : oldCount
+      map.set(metric, newCount)
+      return newCount
+    } else {
+      return 0
+    }
+  }
+
   // Set the count of a metric in the map
   function set (metric, count = 0) {
     if ((typeof metric === 'string') && (typeof count === 'number')) {
@@ -120,6 +144,8 @@ function meter (src, log = false) {
   return {
     isMeter: true,
     add,
+    min,
+    max,
     set,
     get,
     clear: () => map.clear(),
