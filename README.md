@@ -11,7 +11,9 @@ The package exports a function which creates a new `Meter`. It can also be used 
 
 `Meter` properties:
 - `isMeter`: `true`
-- `add`: `(metric: string, value: number = 1) => number` | Increments a metric, initializing it if absent. Returns the metric's total.
+- `add`: `(metric: string, value: number = 1) => number` | Increments a metric, initializing it if absent. Returns the updated metric's value.
+- `min`: `(metric: string, value: number) => number` | Update a metric of the supplied value is smaller or the metric is not set. Returns the updated metric's value.
+- `max`: `(metric: string, value: number) => number` | Update a metric of the supplied value is larger or the metric is not set. Returns the updated metric's value.
 - `set`: `(metric: string, value: number = 0) => number` | Set the value of a metric. Returns the new value.
 - `get`: `(metric: string) => number` | Get the value associated with a metric. Will be `0` if the metric was missing.
 - `clear`: `() => nil` => | Removes all metrics from the Meter.
