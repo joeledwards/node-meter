@@ -1,6 +1,6 @@
 {
   "name": "@buzuli/meter",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Metrics collection utility with support for (de)serialization.",
   "main": "meter.js",
   "scripts": {
