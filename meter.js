@@ -137,7 +137,7 @@ function meter (src, log = false) {
         } else if (a > b) {
           return desc ? -1 : 1
         } else {
-          return desc ? 1 : 1
+          return desc ? 1 : -1
         }
       })
       pairs.forEach(([metric, count]) => {
