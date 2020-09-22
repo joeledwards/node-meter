@@ -188,6 +188,27 @@ tap.test('meter.asObject() returns an object representation', async assert => {
 
   m.add('bar', 2)
   assert.same(m.asObject(), { foo: 1, bar: 2 })
+
+  m.add('baz', 0)
+  assert.same(m.asObject(), { foo: 1, bar: 2, baz: 0 })
+  assert.same(m.asObject({ sort: false }), { foo: 1, bar: 2, baz: 0 })
+
+  // Sort by keys
+  assert.same(m.asObject({ sort: true }), { bar: 2, baz: 0, foo: 1 })
+  assert.same(m.asObject({ sort: 'k' }), { bar: 2, baz: 0, foo: 1 })
+  assert.same(m.asObject({ sort: 'key' }), { bar: 2, baz: 0, foo: 1 })
+  assert.same(m.asObject({ sort: 'keys' }), { bar: 2, baz: 0, foo: 1 })
+  assert.same(m.asObject({ sort: 'm' }), { bar: 2, baz: 0, foo: 1 })
+  assert.same(m.asObject({ sort: 'metric' }), { bar: 2, baz: 0, foo: 1 })
+  assert.same(m.asObject({ sort: 'metrics' }), { bar: 2, baz: 0, foo: 1 })
+
+  // Sort by values
+  assert.same(m.asObject({ sort: 'c' }), { baz: 0, foo: 1, bar: 2 })
+  assert.same(m.asObject({ sort: 'count' }), { baz: 0, foo: 1, bar: 2 })
+  assert.same(m.asObject({ sort: 'counts' }), { baz: 0, foo: 1, bar: 2 })
+  assert.same(m.asObject({ sort: 'v' }), { baz: 0, foo: 1, bar: 2 })
+  assert.same(m.asObject({ sort: 'value' }), { baz: 0, foo: 1, bar: 2 })
+  assert.same(m.asObject({ sort: 'values' }), { baz: 0, foo: 1, bar: 2 })
 })
 
 tap.test('meter.clear() emptries all content', async assert => {

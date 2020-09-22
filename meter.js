@@ -123,11 +123,29 @@ function meter (src, log = false) {
   }
 
   // Convert into a JSON object (not the same as serialization)
-  function asObject () {
+  function asObject ({ sort = false } = {}) {
     const obj = {}
-    map.forEach((count, metric) => {
-      obj[metric] = count
-    })
+
+    if (([true, 'k', 'key', 'keys', 'm', 'metric', 'metrics']).includes(sort)) {
+      const pairs = []
+      map.forEach((count, metric) => pairs.push([metric, count]))
+      pairs.sort()
+      pairs.forEach(([metric, count]) => {
+        obj[metric] = count
+      })
+    } else if ((['c', 'count', 'counts', 'v', 'value', 'values']).includes(sort)) {
+      const pairs = []
+      map.forEach((count, metric) => pairs.push([count, metric]))
+      pairs.sort()
+      pairs.forEach(([count, metric]) => {
+        obj[metric] = count
+      })
+    } else {
+      map.forEach((count, metric) => {
+        obj[metric] = count
+      })
+    }
+
     return obj
   }
 
