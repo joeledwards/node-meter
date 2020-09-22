@@ -123,20 +123,30 @@ function meter (src, log = false) {
   }
 
   // Convert into a JSON object (not the same as serialization)
-  function asObject ({ sort = false } = {}) {
+  function asObject ({ sort = false, desc = false } = {}) {
     const obj = {}
 
     if (([true, 'k', 'key', 'keys', 'm', 'metric', 'metrics']).includes(sort)) {
       const pairs = []
       map.forEach((count, metric) => pairs.push([metric, count]))
-      pairs.sort()
+      pairs.sort((a, b) => {
+        if (a === b) {
+          // Cannot really hit this case so it is not covered by the tests.
+          // But I can't bring myself to leave it out
+          return 0
+        } else if (a > b) {
+          return desc ? -1 : 1
+        } else {
+          return desc ? 1 : 1
+        }
+      })
       pairs.forEach(([metric, count]) => {
         obj[metric] = count
       })
     } else if ((['c', 'count', 'counts', 'v', 'value', 'values']).includes(sort)) {
       const pairs = []
       map.forEach((count, metric) => pairs.push([count, metric]))
-      pairs.sort()
+      pairs.sort((a, b) => desc ? (b - a) : (a - b))
       pairs.forEach(([count, metric]) => {
         obj[metric] = count
       })

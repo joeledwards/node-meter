@@ -20,7 +20,9 @@ The package exports a function which creates a new `Meter`. It can also be used 
 - `forEach`: `({ metric, count }) => nil => nil` | Applies the supplied function to every metric in the Meter.
 - `entries`: `Iterator[[string, number]]` | Supplies an array containing each metric/count pair as an array of the form `[metric, count]`.
 - `metrics`: `Iterator[string]` | Supplies an array containing all of the metric names.
-- `asObject`: `({ sort = false }) => object` | Converts this meter into a simple object. With each metric key as a field name mapping to its count. Unsorted by default, but may be sorted by keys (sort is `true`, `keys`, or `metics`), or sorted by values (sort is `values` or `counts`).
+- `asObject`: `({ sort = false, desc = false }) => object` | Converts this meter into a simple object. With each metric key as a field name mapping to its count.
+   - Unsorted by default, but may be sorted by keys (`sort` is `true`, `keys`, or `metics`), or sorted by values (`sort` is `values` or `counts`).
+   - Defaults to ascending order, but order may be switched by setting `desc` to `true`.
 - `merge`: `(Meter) => nil` | Merges all of the metrics from another Meter into this Meter.
 - `mergeMap`: `(Map) => nil` | Merges all of a Map's valid fields (strings mapping to numbers) into this Meter.
 - `mergeObject`: `(object) => nil` | Merges all of an object's valid fields (strings mapping to numbers) into this Meter.

@@ -209,6 +209,13 @@ tap.test('meter.asObject() returns an object representation', async assert => {
   assert.same(m.asObject({ sort: 'v' }), { baz: 0, foo: 1, bar: 2 })
   assert.same(m.asObject({ sort: 'value' }), { baz: 0, foo: 1, bar: 2 })
   assert.same(m.asObject({ sort: 'values' }), { baz: 0, foo: 1, bar: 2 })
+
+  // Sort Order
+  assert.same(m.asObject({ sort: 'keys', desc: false }), { bar: 2, baz: 0, foo: 1 })
+  assert.same(m.asObject({ sort: 'keys', desc: true }), { foo: 1, baz: 0, bar: 2 })
+
+  assert.same(m.asObject({ sort: 'values', desc: false }), { baz: 0, foo: 1, bar: 2 })
+  assert.same(m.asObject({ sort: 'values', desc: true }), { bar: 2, foo: 1, baz: 0 })
 })
 
 tap.test('meter.clear() emptries all content', async assert => {
