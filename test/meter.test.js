@@ -101,6 +101,14 @@ tap.test('meter.entries() returns an iterable of the collected metrics', async a
   assert.same(m.entries(), [['foo', 1], ['goo', 2], ['@fiz-baz', 13]])
 })
 
+tap.test('meter.map() returns an array of the mapped metrics', async assert => {
+  const m = meter()
+  assert.equal(m.add('foo'), 1)
+  assert.equal(m.set('goo', 2), 2)
+  assert.equal(m.add('@fiz-baz', 13), 13)
+  assert.same(m.map(({ metric, count }) => `${metric}:${count}`), ['foo:1', 'goo:2', '@fiz-baz:13'])
+})
+
 tap.test('meter(serialized) loads from a serialized meter', async assert => {
   const m = meter()
   m.add('foo')

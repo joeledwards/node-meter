@@ -130,11 +130,7 @@ function meter (src, log = false) {
       const pairs = []
       map.forEach((count, metric) => pairs.push([metric, count]))
       pairs.sort(([a], [b]) => {
-        if (a === b) {
-          // Cannot really hit this case so it is not covered by the tests.
-          // But I can't bring myself to leave it out
-          return 0
-        } else if (a > b) {
+        if (a > b) {
           return desc ? -1 : 1
         } else {
           return desc ? 1 : -1
