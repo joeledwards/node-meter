@@ -169,6 +169,15 @@ function meter (src, log = false) {
     return map.entries()
   }
 
+  // Supply an array with every metric mapped by the supplied function
+  function mapEntries (mapper) {
+    const entries = []
+
+    map.forEach((count, metric) => entries.push(mapper({ metric, count })))
+
+    return entries
+  }
+
   return {
     isMeter: true,
     add,
@@ -180,6 +189,7 @@ function meter (src, log = false) {
     forEach: handler => map.forEach((count, metric) => handler({ metric, count })),
     entries,
     metrics,
+    map: mapEntries,
     asObject,
     merge,
     mergeMap,
