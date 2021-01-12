@@ -318,7 +318,7 @@ tap.test("meter's merge methods should ignore invalid inputs", async assert => {
   m.merge(true)
   m.merge(1)
   m.merge('foo')
-  m.merge([ 'foo' ])
+  m.merge(['foo'])
   m.merge({ foo: 1 })
   m.merge(map)
 
@@ -326,7 +326,7 @@ tap.test("meter's merge methods should ignore invalid inputs", async assert => {
   m.mergeMap(true)
   m.mergeMap(1)
   m.mergeMap('foo')
-  m.mergeMap([ 'foo' ])
+  m.mergeMap(['foo'])
   m.mergeMap({ foo: 1 })
   m.mergeMap(m2)
 
@@ -334,8 +334,17 @@ tap.test("meter's merge methods should ignore invalid inputs", async assert => {
   m.mergeObject(true)
   m.mergeObject(1)
   m.mergeObject('foo')
-  m.mergeObject([ 'foo' ])
+  m.mergeObject(['foo'])
 
   assert.equal(m.size(), 1)
   assert.equal(m.get('foo'), 1)
+})
+
+tap.test('Zero values should be present in the dumped object', async assert => {
+  const m = meter()
+  m.set('foo', 0)
+  m.add('bar')
+  m.add('bar', -1)
+
+  assert.same(m.asObject(), { foo: 0, bar: 0 })
 })
